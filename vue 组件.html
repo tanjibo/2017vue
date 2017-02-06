@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue.js练习</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+	<style type="text/css">
+     .complete{
+     	text-decoration: line-through;
+     	color:green;
+     }
+	</style>
+</head>
+
+<body>
+ <div class="container" id="app">
+      
+ 	 <div class="panel panel-default">
+ 	     <div class="panel-heading"> 
+ 	     <h3 class="panel-title">vue.js 2.0 练习--总共个数:<span style="font-weight: 700;color:red;">{{totalCount}}</span></h3>
+ 	     </div>
+ 	 	<div class="panel-body">
+
+ 	 	  <todo-list v-bind:lists='lists'></todo-list>
+ 	 	  <form-list  v-bind:lists='lists'></form-list>
+
+         </div>
+ 	 </div>
+ </div>
+
+	
+</body>
+<script type="text/javascript" src="vue.js"></script>
+<script type="text/x-template" id="todo-list">
+     <ul class="list-group">
+        <li class="list-group-item" v-for='(item,index) in lists'>
+           <span v-bind:class="{ complete:item.complete }">{{item.title}}</span>
+           <button class="btn btn-danger pull-right btn-xs" @click.prevent='delList(index)'>删除</button>
+           <button class="btn pull-right btn-xs" v-bind:class="[item.complete?'btn-primary':'btn-default']" @click.prevent='complete(item)'>
+           {{item.complete?'完成':'未完成'}}
+           </button>
+        
+        </li>
+      </ul>
+</script>
+<script type="text/x-template" id="form-list">
+  <form>
+        <div class="input-group">
+          <input type="text" class="form-control" v-model="listArr.title">
+          <div class="input-group-addon"><button @click.prevent="addList(listArr)" class='btn btn-xs btn-success pull-right'> 添加</button></div>
+        </div>
+      </form>
+</script>
+<script type="text/javascript">
+   Vue.component('todo-list',{
+    template: '#todo-list',
+    props:['lists'],
+    methods:{
+        delList(index){
+              this.lists.splice(index,1);
+      },
+      complete(item){
+            item.complete=!item.complete
+      }
+    }
+   })
+
+   Vue.component('form-list',{
+    template:"#form-list",
+     props:['lists'],
+    data(){
+      return{
+          listArr:{id:'',title:'',complete:false}
+      }
+    },
+    methods:{
+        addList(listArr){
+         this.lists.push(listArr);
+         this.listArr={id:'',title:""}
+      },
+    }
+   })
+   new Vue({
+   	 el:'#app',
+   	 data:{
+   	 	lists:[{
+   	 		id:'',
+   	 		title:'第一个',
+   	 		complete:false
+   	 	}],
+   	
+   	 },
+   	 computed:{
+   	 	totalCount:function(){
+   	 		return this.lists.length;
+   	 	}
+   	 },
+   
+   })
+</script>
+</html>

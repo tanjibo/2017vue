@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue.js练习</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+ <div class="container" id="app">
+      
+ 	 <div class="panel panel-default">
+ 	     <div class="panel-heading"> 
+ 	     <h3 class="panel-title">vue.js 2.0 练习</h3>
+ 	     </div>
+ 	 	<div class="panel-body">
+ 	 	   <!-- 列表组件 -->
+ 	 	    <ul class="list-group">
+ 	 	    	<li v-for="(item,index) in list" class="list-group-item">{{item.message}}<button class='btn btn-danger btn-xs pull-right' @click.prevent="delToDo(index)">删除{{index}}</button></li>
+ 	 	    </ul>
+ 	 	    <!-- form 表单 -->
+          <form method="post" action="">
+          	<!--  <div class="form-group">
+          	 	<input type="text" class="form-control" v-model="message">
+          	 	<button class="btn btn-success btn-xs">添加一个</button>
+          	 </div> -->
+          	 <div class="input-group">
+          	 	<input type="text" class="form-control" v-model="todo.message">
+          	 	<div class="input-group-addon"><button @click.prevent="addToDo(todo)" class="btn btn-success btn-xs">添加</button></div>
+          	 </div>
+          	 <div class="form-group">
+          	 	<input type="submit" class='btn btn-success' value="提交">
+          	 </div>
+          </form> 	 
+
+
+         </div>
+ 	 </div>
+ </div>
+
+	
+</body>
+<script type="text/javascript" src="vue.js"></script>
+<script type="text/javascript">
+	new Vue({
+		el:'#app',
+		data:{
+			list:[{
+				id:1,message:'第一个'
+			}],
+			todo:{
+				id:'',message:''
+			}
+		},
+		methods:{
+			addToDo(todo){
+				console.log(todo);
+			  this.list.push(todo);
+		      this.todo={id:'',message:''}
+			},
+	        delToDo(index){
+	        	console.log(index);
+	        	this.list.splice(index,1);
+	        }
+		}
+	})
+</script>
+</html>

@@ -5,4 +5,8 @@
  * vue
  * vue-router
  * vuex
+
+ 可以学习一个点
+ ---
+ `git checkout -b develop` #创建分之并切换到分之
  
